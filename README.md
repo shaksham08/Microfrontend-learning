@@ -21,12 +21,15 @@ This Repo Contains all my micro Frontend learning notes
 - each smaller app is easier to understand and make changes to 
 - if something breaks in one wont affect the other
 
+## Dummy microfrontend app
+
+- it would contain two pages i.e product listing and shopping cart
+- 100% fake data
+- on first we think we sould think of monolithic style of something like this 
 
 
 ```mermaid
   graph TD;
-      A-->B;
-      A-->C;
-      B-->D;
-      C-->D;
+      A[App component]-->B[productList component];
+      A-->C[Cart component];
 ```
