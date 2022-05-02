@@ -25,7 +25,7 @@ This Repo Contains all my micro Frontend learning notes
 
 - it would contain two pages i.e product listing and shopping cart
 - 100% fake data
-- on first we think we sould think of monolithic style of something like this 
+- first we think of monolithic style of something like this 
 
 
 ```mermaid
@@ -33,3 +33,59 @@ This Repo Contains all my micro Frontend learning notes
       A[App component]-->B[productList component];
       A-->C[Cart component];
 ```
+
+- here this complete app ould be built with one framework.
+- Now if we decide to built it using microfrontend then each major feature can be broken into different microfrontend application
+
+- MF1 -> productList
+- MF2 -> cartPage
+
+- but to show which micro frontend on top we need to create one more microfrontend app called as **container** -> decides when and where to show all the microfrontends we have
+
+
+```mermaid
+  graph TD;
+      A[container]-->B[MF1 -> productList];
+      A-->C[MF2 -> cartPage];
+```
+
+- so finally we would make three smaller apps.
+
+## Container application
+
+- since container application needs to decide where to show and when to show so container needs to access these two application at some point in time.
+- there are different ways of doing this.
+- this process is reffered as **Integration**
+- **Integration** :- how and when does the container get access to the source code in MFE
+
+## Integration
+
+- There is no single perfect solution to integration 
+- many solutions , each have pros and cons 
+- Look at what your requirement are , then pick a solution.
+
+## Major Categories of integration
+
+1. Build time integration ( compile time integration)
+    - Before container gets loaded in the browser , it gets access to Product list source code
+
+2. Run time integration ( Client side integration)
+    - After container gets loaded in the browser , it gets access to the ProductList source code
+
+3. Server integration 
+    - while sending down JS to load up Container , a server decides on weather or not to include ProductList source code
+
+Note : searver integration requires tones of backend code.
+
+
+## Build Time Integration
+
+- All points goes down as the time increases
+
+1. Engineering Team develops productList
+2. Time to deploy!
+3. Publish ProductList as an NPM package (npm registry)
+4. team in charge of Container installs ProcuctList as a dependency
+5. Container team builds their app
+6. output bundle that includes all the code for productlist
+
