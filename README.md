@@ -89,3 +89,23 @@ Note : searver integration requires tones of backend code.
 5. Container team builds their app
 6. output bundle that includes all the code for productlist
 
+- Easy to setup and understand
+- Container has to be redeployed every time ProductList is updated
+- Tempting to tightly couple the Container + ProductList together
+
+## Run time integration
+
+1. Engineering Team develops productList
+2. Time to deploy!
+3. ProductList code deployed at https://my-app.com/productlist.js (some static url)
+4. user navigates to my-app.com , container app is loaded
+5. container app fetches productlist.js and executes it
+
+- product list can be deployed independently at any time 
+- different versions of product list can be deployed and container can decide which one to use
+- Tooling + setup is far more complicated
+
+## Here we would focus on run time integration using webpack module integration
+
+
+
