@@ -158,7 +158,7 @@ Note : searver integration requires tones of backend code.
       A[Dependency]-->D[index.js];
       B[Dependency]-->D[index.js];
       C[Dependency]-->D[index.js];
-      D-->E[webpack(combine many js file into one single file)];
+      D-->E[webpack : combine many js file into one single file];
       E-->F[bundle.js];
 ```
 
