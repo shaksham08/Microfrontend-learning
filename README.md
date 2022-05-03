@@ -107,7 +107,7 @@ Note : searver integration requires tones of backend code.
 
 ## Here we would focus on run time integration using webpack module integration
 
-## Project Structure ( project01)
+## Project Structure ( project0)
 
 1. container
 
@@ -161,6 +161,74 @@ Note : searver integration requires tones of backend code.
       D-->E[webpack : combine many js file into one single file];
       E-->F[bundle.js];
 ```
+
+Now to make the webpack output easily visible we can use webpack dev server
+
+- we setup both container and products project
+
+- Now we need to setup our integration process
+
+1. Design one app as the host(container) and one as the remote (products)
+2. in the remote , decide which modules (files) you want to make available to other projects
+    - right now its easy descision , i.e only src indes.js file
+3. set up module fedaration plugin to expose those files
+
+```
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+
+module.exports = {
+  mode: 'development',
+  devServer: {
+    port: 8081,
+  },
+  plugins: [
+    new ModuleFederationPlugin({
+      name: 'products',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './ProductsIndex': './src/index',
+      },
+    }),
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+    }),
+  ],
+};
+
+```
+
+4. in the host , decide which files you want to get from the remote
+
+```
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+
+module.exports = {
+  mode: 'development',
+  devServer: {
+    port: 8080,
+  },
+  plugins: [
+    new ModuleFederationPlugin({
+      name: 'container',
+      remotes: {
+        products: 'products@http://localhost:8081/remoteEntry.js',
+      },
+    }),
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+    }),
+  ],
+};
+
+```
+
+5. set up module fedaration plugin to fetch those files
+6. In the Host,refactor the entry point to load asynchronously 
+7. in the host , import whatever files you need from the remote
+
+- All the code till here is added into project01 folder inside project 0 folder
 
 
 
