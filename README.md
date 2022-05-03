@@ -245,3 +245,5 @@ if we go in the network tab we see
 - lets understand the configuration options for container config file
 
 ![configuration](./images/configurationsoptions.png)
+
+![products](./images/containerwebpackconfig.png)
