@@ -232,6 +232,6 @@ if we go in the network tab we see
 
 ![network](./images/modulefedarationnetwork.png)
 
-![img](./images/modulefedaration.png)
+![img](./images/modulefedaration1.png)
 
 - image for reference
