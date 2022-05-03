@@ -111,6 +111,7 @@ Note : searver integration requires tones of backend code.
 
 1. container
 
+```
 📦container
  ┣ 📂public
  ┃ ┗ 📜index.html
@@ -118,9 +119,11 @@ Note : searver integration requires tones of backend code.
  ┃ ┗ 📜index.js
  ┣ 📜package.json
  ┗ 📜webpack.config.js
+ ```
 
 2. cart
 
+```
 📦cart
  ┣ 📂public
  ┃ ┗ 📜index.html
@@ -128,9 +131,11 @@ Note : searver integration requires tones of backend code.
  ┃ ┗ 📜index.js
  ┣ 📜package.json
  ┗ 📜webpack.config.js
+ ```
 
 3. products
 
+```
 📦products
  ┣ 📂public
  ┃ ┗ 📜index.html
@@ -138,6 +143,7 @@ Note : searver integration requires tones of backend code.
  ┃ ┗ 📜index.js
  ┣ 📜package.json
  ┗ 📜webpack.config.js
+ ```
 
 
  - Each of these will be built using no framework
