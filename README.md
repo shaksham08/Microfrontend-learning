@@ -240,4 +240,8 @@ if we go in the network tab we see
 
 ![combined](./images/combinedmf.png)
 
-- image for reference
+- the import statement gives webpack the opportunity to load up the code from Products before running bootstrap.js ... so we dont run bootstrap.js directly and import it in index.js
+
+- lets understand the configuration options for container config file
+
+![configuration](./images/configurationsoptions.png)
