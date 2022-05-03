@@ -238,4 +238,6 @@ if we go in the network tab we see
 
 ![container](./images/conainermodulefedaration.png)
 
+![combined](./images/combinedmf.png)
+
 - image for reference
