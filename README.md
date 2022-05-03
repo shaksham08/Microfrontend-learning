@@ -140,5 +140,22 @@ Note : searver integration requires tones of backend code.
  ┗ 📜webpack.config.js
 
 
+ - Each of these will be built using no framework
+ - we have to be able to run it in isolation
+ - we have to be able to run it through container app
+
+ Note: see project 01 folder
+
+
+ ```mermaid
+  graph TD;
+      A[Dependency]-->D[index.js];
+      B[Dependency]-->D[index.js];
+      C[Dependency]-->D[index.js];
+      D-->E[webpack(combine many js file into one single file)];
+      E-->F[bundle.js];
+```
+
+
 
 
