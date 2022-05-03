@@ -234,4 +234,8 @@ if we go in the network tab we see
 
 ![img](./images/modulefedaration1.png)
 
+### Below is the container module federation
+
+![container](./images/conainermodulefedaration.png)
+
 - image for reference
