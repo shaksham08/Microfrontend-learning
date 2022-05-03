@@ -107,5 +107,38 @@ Note : searver integration requires tones of backend code.
 
 ## Here we would focus on run time integration using webpack module integration
 
+## Project Structure ( project01)
+
+1. container
+
+📦container
+ ┣ 📂public
+ ┃ ┗ 📜index.html
+ ┣ 📂src
+ ┃ ┗ 📜index.js
+ ┣ 📜package.json
+ ┗ 📜webpack.config.js
+
+2. cart
+
+📦cart
+ ┣ 📂public
+ ┃ ┗ 📜index.html
+ ┣ 📂src
+ ┃ ┗ 📜index.js
+ ┣ 📜package.json
+ ┗ 📜webpack.config.js
+
+3. products
+
+📦products
+ ┣ 📂public
+ ┃ ┗ 📜index.html
+ ┣ 📂src
+ ┃ ┗ 📜index.js
+ ┣ 📜package.json
+ ┗ 📜webpack.config.js
+
+
 
 
