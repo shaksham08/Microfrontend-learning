@@ -1,12 +1,13 @@
 # Microfrontend-learning
+
 This Repo Contains all my micro Frontend learning notes
 
 ## What is microfrontend
 
 - consider we are building e com app with 2 pages : productlisting and shopping cart
 - both pages need a lot of code so here we have 2 major feature and then we split both major feature in two totally different codebases
-- this both can be built using any framework 
-- In microfrontent applications we always try to prevent direct communicatin between the different applications 
+- this both can be built using any framework
+- In microfrontent applications we always try to prevent direct communicatin between the different applications
 - like here product listing page needs to share the details of products added to the shopping cart
 - for this we need to use api and no direct communication.
 - major reason for micronfrontend is that is keeps all the major features as different applications so different engineering team can work on that and they all can follow their best practices.
@@ -18,15 +19,14 @@ This Repo Contains all my micro Frontend learning notes
 ## why use them
 
 - multiple engineering team can work in isolation
-- each smaller app is easier to understand and make changes to 
+- each smaller app is easier to understand and make changes to
 - if something breaks in one wont affect the other
 
 ## Dummy microfrontend app
 
 - it would contain two pages i.e product listing and shopping cart
 - 100% fake data
-- first we think of monolithic style of something like this 
-
+- first we think of monolithic style of something like this
 
 ```mermaid
   graph TD;
@@ -41,7 +41,6 @@ This Repo Contains all my micro Frontend learning notes
 - MF2 -> cartPage
 
 - but to show which micro frontend on top we need to create one more microfrontend app called as **container** -> decides when and where to show all the microfrontends we have
-
 
 ```mermaid
   graph TD;
@@ -60,23 +59,24 @@ This Repo Contains all my micro Frontend learning notes
 
 ## Integration
 
-- There is no single perfect solution to integration 
-- many solutions , each have pros and cons 
+- There is no single perfect solution to integration
+- many solutions , each have pros and cons
 - Look at what your requirement are , then pick a solution.
 
 ## Major Categories of integration
 
 1. Build time integration ( compile time integration)
-    - Before container gets loaded in the browser , it gets access to Product list source code
+
+   - Before container gets loaded in the browser , it gets access to Product list source code
 
 2. Run time integration ( Client side integration)
-    - After container gets loaded in the browser , it gets access to the ProductList source code
 
-3. Server integration 
-    - while sending down JS to load up Container , a server decides on weather or not to include ProductList source code
+   - After container gets loaded in the browser , it gets access to the ProductList source code
+
+3. Server integration
+   - while sending down JS to load up Container , a server decides on weather or not to include ProductList source code
 
 Note : searver integration requires tones of backend code.
-
 
 ## Build Time Integration
 
@@ -101,7 +101,7 @@ Note : searver integration requires tones of backend code.
 4. user navigates to my-app.com , container app is loaded
 5. container app fetches productlist.js and executes it
 
-- product list can be deployed independently at any time 
+- product list can be deployed independently at any time
 - different versions of product list can be deployed and container can decide which one to use
 - Tooling + setup is far more complicated
 
@@ -119,7 +119,7 @@ Note : searver integration requires tones of backend code.
  ┃ ┗ 📜index.js
  ┣ 📜package.json
  ┗ 📜webpack.config.js
- ```
+```
 
 2. cart
 
@@ -131,7 +131,7 @@ Note : searver integration requires tones of backend code.
  ┃ ┗ 📜index.js
  ┣ 📜package.json
  ┗ 📜webpack.config.js
- ```
+```
 
 3. products
 
@@ -143,23 +143,21 @@ Note : searver integration requires tones of backend code.
  ┃ ┗ 📜index.js
  ┣ 📜package.json
  ┗ 📜webpack.config.js
- ```
+```
 
+- Each of these will be built using no framework
+- we have to be able to run it in isolation
+- we have to be able to run it through container app
 
- - Each of these will be built using no framework
- - we have to be able to run it in isolation
- - we have to be able to run it through container app
+Note: see project 01 folder
 
- Note: see project 01 folder
-
-
- ```mermaid
-  graph TD;
-      A[Dependency]-->D[index.js];
-      B[Dependency]-->D[index.js];
-      C[Dependency]-->D[index.js];
-      D-->E[webpack : combine many js file into one single file];
-      E-->F[bundle.js];
+```mermaid
+ graph TD;
+     A[Dependency]-->D[index.js];
+     B[Dependency]-->D[index.js];
+     C[Dependency]-->D[index.js];
+     D-->E[webpack : combine many js file into one single file];
+     E-->F[bundle.js];
 ```
 
 Now to make the webpack output easily visible we can use webpack dev server
@@ -170,7 +168,7 @@ Now to make the webpack output easily visible we can use webpack dev server
 
 1. Design one app as the host(container) and one as the remote (products)
 2. in the remote , decide which modules (files) you want to make available to other projects
-    - right now its easy descision , i.e only src indes.js file
+   - right now its easy descision , i.e only src indes.js file
 3. set up module fedaration plugin to expose those files
 
 ```
@@ -225,11 +223,13 @@ module.exports = {
 ```
 
 5. set up module fedaration plugin to fetch those files
-6. In the Host,refactor the entry point to load asynchronously 
+6. In the Host,refactor the entry point to load asynchronously
 7. in the host , import whatever files you need from the remote
 
 - All the code till here is added into project01 folder inside project 0 folder
 
+if we go in the network tab we see
 
+![network](./images/modulefedarationnetwork.png)
 
-
+![img](./images/modulefedaration.png)
