@@ -222,7 +222,7 @@ module.exports = {
 
 ```
 
-5. set up module fedaration plugin to fetch those files
+5. set up module federation plugin to fetch those files
 6. In the Host,refactor the entry point to load asynchronously
 7. in the host , import whatever files you need from the remote
 
