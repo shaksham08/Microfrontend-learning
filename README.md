@@ -247,3 +247,51 @@ if we go in the network tab we see
 ![configuration](./images/configurationsoptions.png)
 
 ![products](./images/containerwebpackconfig.png)
+
+- similarly we will add the same to the cart application , webpack config of cart project
+
+```
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+
+module.exports = {
+  mode: "development",
+  devServer: {
+    port: 8082,
+  },
+  plugins: [
+    new ModuleFederationPlugin({
+      name: "cart",
+      filename: "remoteEntry.js",
+      exposes: {
+        "./CartShow": "./src/index",
+      },
+    }),
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+  ],
+};
+
+```
+
+- the final container app webpack config file will be
+
+```
+plugins: [
+    new ModuleFederationPlugin({
+      name: "container",
+      remotes: {
+        products: "products@http://localhost:8081/remoteEntry.js",
+        cart: "cart@http://localhost:8082/remoteEntry.js",
+      },
+    }),
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+  ],
+```
+
+- Final Result of container app
+
+![products](./images/finalResultEcom.png)
