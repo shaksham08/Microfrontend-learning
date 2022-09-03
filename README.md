@@ -3,13 +3,7 @@
 This Repo Contains all my micro Frontend learning notes
 
 
-# Contents
-
-1. [What is microfrontend](#What is microfrontend)
-
-
-
-## What is microfrontend
+##  What is microfrontend
 
 - consider we are building e com app with 2 pages : productlisting and shopping cart
 - both pages need a lot of code so here we have 2 major feature and then we split both major feature in two totally different codebases
@@ -302,6 +296,14 @@ plugins: [
 - Final Result of container app
 
 ![products](./images/finalResultEcom.png)
+
+
+## Sharing dependency between MFS
+
+- Here we can see in the above project we are loading faker module 2 times because for both cart and product faked module is loaded
+
+![fakerJs](./images/fakerloads.png)
+
 
 
 
