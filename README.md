@@ -2,8 +2,7 @@
 
 This Repo Contains all my micro Frontend learning notes
 
-
-##  What is microfrontend
+## What is microfrontend
 
 - consider we are building e com app with 2 pages : productlisting and shopping cart
 - both pages need a lot of code so here we have 2 major feature and then we split both major feature in two totally different codebases
@@ -297,13 +296,18 @@ plugins: [
 
 ![products](./images/finalResultEcom.png)
 
-
 ## Sharing dependency between MFS
 
 - Here we can see in the above project we are loading faker module 2 times because for both cart and product faked module is loaded
 
 ![fakerJs](./images/fakerloads.png)
 
+- we need to do something where both cart and product to use one copy of faker module.
 
-
-
+```mermaid
+ graph TD;
+     A[container fetches remote js entry file]-->B[Container fetches cart remote js entry file];
+     B-->C[container notices both require faker];
+     C-->D[container can choose to only load one either from cart of product];
+     D-->E[Single copy is made available to both cart and products];
+```
