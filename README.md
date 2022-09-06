@@ -304,10 +304,47 @@ plugins: [
 
 - we need to do something where both cart and product to use one copy of faker module.
 
+- this can be done using module federation plugin
+
 ```mermaid
  graph TD;
      A[container fetches remote js entry file]-->B[Container fetches cart remote js entry file];
      B-->C[container notices both require faker];
-     C-->D[container can choose to only load one either from cart of product];
+     C-->D[container can choose to only load one either from cart or product];
      D-->E[Single copy is made available to both cart and products];
 ```
+
+- Below is products webpack config js
+
+```js
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+
+module.exports = {
+  mode: "development",
+  devServer: {
+    port: 8081,
+  },
+  plugins: [
+    new ModuleFederationPlugin({
+      name: "products",
+      filename: "remoteEntry.js",
+      exposes: {
+        "./ProductsIndex": "./src/index",
+      },
+      shared: ["faker"],
+    }),
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+  ],
+};
+```
+
+- we need to add `shared: ["faker"],` this to both cart and products webpack module federation plugin
+
+- now in container application we will only see one faker module loaded
+
+- we fixed this but we broke something as well , when we run cart or products alone it would give error now `Shared module is not available for eager consumption: `
+
+- This is because now since faker is added to shared modules so when we run the app it first run `index.js` file which requires faker , but since its shared it loads it asynchronously , which in turn is not available at that moment
