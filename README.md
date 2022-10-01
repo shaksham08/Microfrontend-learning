@@ -348,3 +348,10 @@ module.exports = {
 - we fixed this but we broke something as well , when we run cart or products alone it would give error now `Shared module is not available for eager consumption: `
 
 - This is because now since faker is added to shared modules so when we run the app it first run `index.js` file which requires faker , but since its shared it loads it asynchronously , which in turn is not available at that moment
+
+- to fix this we just need to create `bootstrap.js` file and move all the code from `index.js` to it , and in `index.js` add an import statement as below :
+
+```js
+// this way of importing tells webpack to load all the libraries async before running
+import("./bootstrap");
+```
