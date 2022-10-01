@@ -355,3 +355,48 @@ module.exports = {
 // this way of importing tells webpack to load all the libraries async before running
 import("./bootstrap");
 ```
+
+- Now we can see that faker is only imported once in the container app
+
+- **Note** :- There can also be a scenario where both project can make use of different version of faker.
+
+- In this case it would import two different version of faker, which is expected behavior.
+
+- Webpack also takes care of the npm versioning system , if there is not a major version change then in that case it would only download one copy of that
+
+# Singleton Loading
+
+- There are many libraries like (react) which we cannot load multiple times,which will gives error.
+
+- So sometimes we may be using different versions of that library and in that case it would give error to use that library.
+
+- So we need to force it to use only one copy of that particular version or at least get some warning , to do this we define shared modules with different syntax
+
+```js
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+
+module.exports = {
+  mode: "development",
+  devServer: {
+    port: 8081,
+  },
+  plugins: [
+    new ModuleFederationPlugin({
+      name: "products",
+      filename: "remoteEntry.js",
+      exposes: {
+        "./ProductsIndex": "./src/index",
+      },
+      shared: ["faker"],
+    }),
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+  ],
+};
+```
+
+- update this in both cart and products.
+
+- Now if we try to use different version of faker then it would use only one and give us a warning (`unsatisfied version`) in the browser console.
