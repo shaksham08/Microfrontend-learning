@@ -19,7 +19,7 @@ const mount = (el) => {
 if (process.env.NODE_ENV === "development") {
   const el = document.querySelector("#dev-products");
 
-  // Assuming our container doesnt have an element
+  // Assuming our container doesn't have an element
   // with id 'dev-products'....
   if (el) {
     // We are probably running in isolation

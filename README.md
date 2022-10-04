@@ -403,6 +403,10 @@ module.exports = {
 
 # Sub app execution context
 
+- When we run products app in isolation then there it knows where to render (which element id to render all the list)
+- But when we run the same app its not necessary that container would have the same div with same id.
+- In this case container should have control over where to render any sub MF.
+
 - Context/Situation #1
 - We are running this file in development in isolation
 - We are using our local index.html file
@@ -452,3 +456,51 @@ if (process.env.NODE_ENV === "development") {
 // WE DO NOT WANT try to immediately render the app
 export { mount };
 ```
+
+- Now since this mount is exported from bootstrap file so we need to update the webpack file (exposes)
+
+- Rather than exporting index now we would export bootstrap directly.
+
+```js
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+
+module.exports = {
+  mode: "development",
+  devServer: {
+    port: 8081,
+  },
+  plugins: [
+    new ModuleFederationPlugin({
+      name: "products",
+      filename: "remoteEntry.js",
+      exposes: {
+        "./ProductsIndex": "./src/bootstrap",
+      },
+      shared: {
+        faker: {
+          singleton: true,
+        },
+      },
+    }),
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+  ],
+};
+```
+
+- In container we would import
+
+```js
+import { mount } from "products/ProductsIndex";
+import "cart/CartShow";
+
+console.log("Container!");
+
+mount(document.querySelector("#my-products"));
+```
+
+- This can be used anywhere in react , vue , angular etc
+
+- We would repeat the similar with cart app as well
