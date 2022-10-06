@@ -506,3 +506,99 @@ mount(document.querySelector("#my-products"));
 - We would repeat the similar with cart app as well
 
 # Application Two - A dummy SAAS project
+
+- Home Page
+- Pricing Page
+- Sign In Page
+- Sign In Page
+- Sign Up Page
+- Dashboard Page
+
+## MFE to be divided in different projects
+
+- Marketing :
+
+  - Homepage
+  - Pricing Page
+
+- Authentication
+
+  - Sign In
+  - Sign Up
+
+- Dashboard
+
+  - Dashboard Page
+
+- Container
+
+## Tech Stack
+
+- Container : React
+
+- Marketing : React
+
+- Authentication : React
+
+- Dashboard : Vue
+
+**Note : Integration technique is identical**
+
+**Note**
+
+- Some of the blog post or article may follow different approach
+
+  - Share state between apps with redux
+  - THe container must be written with web components
+  - Only communicate between apps using xyz system
+  - Each microfrontend can be a react component that is directly used by another app.
+
+- The architecture of a project is defined by its requirements
+
+- You need to think about the requirements of your app if this architecture works for you.
+
+- There are wide verity of things you can do.
+
+## Our Requirements
+
+- Inflexible requirements #1
+
+  - Zero coupling between child apps
+    - No importing of functions/classes/ objects etc
+    - No shared state
+    - shared library through MF(module federation system) is ok
+
+- Inflexible requirements #2
+
+  - Near Zero coupling between container and child applications
+    - Container should not assume that child is using a particular framework
+    - Any necessary communication done with callbacks or simple events
+
+- Inflexible requirements #3
+
+  - Css From one project should not affect other (it should be scoped)
+
+- Inflexible requirements #4
+
+  - Version control (monorepo vs separate) shouldn't have any impact on the overall project
+  - some people want to use mono repo
+  - some people want to keep different repo
+
+Note : for this we would use mono repo but it would be same for multi repo as well
+
+- Inflexible requirements #5
+
+  - Container should be able to decide to always use the latest version of microfrontend or specify a particular version
+    - container will always use the latest version of a child app(doesn't require redeploy of container)
+    - container can specify what version of child it wants to use (requires a redeploy to change )
+
+## Project setup
+
+- THe complete project will be in Project1(SAAS) folder and with a zip file also
+
+- After extracting do `npm i` in all the 4 sub projects
+
+- We are gonna create 3 webpack config files
+  - One for production
+  - one for dev
+  - One common for dev and productions
