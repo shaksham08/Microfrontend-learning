@@ -599,6 +599,90 @@ Note : for this we would use mono repo but it would be same for multi repo as we
 - After extracting do `npm i` in all the 4 sub projects
 
 - We are gonna create 3 webpack config files
+
   - One for production
   - one for dev
   - One common for dev and productions
+
+- We will first start with **marketing**
+
+- Webpack.common.js
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/, // .js and .jsx files
+        exclude: /node_modules/, // excluding the node_modules folder
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-react", "@babel/preset-env"],
+            plugins: ["@babel/plugin-transform-runtime"],
+          },
+        },
+      },
+    ],
+  },
+};
+```
+
+- webpack.dev.js
+
+```js
+const { merge } = require("webpack-merge");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const commonConfig = require("./webpack.common");
+
+const devConfig = {
+  mode: "development",
+  devServer: {
+    port: 8081,
+    historyApiFallback: {
+      index: "index.html",
+    },
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+  ],
+};
+
+module.exports = merge(commonConfig, devConfig);
+```
+
+- package.json
+
+```json
+{
+  "name": "marketing",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "webpack serve --config config/webpack.dev.js"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.1",
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^5.0.0",
+    "html-webpack-plugin": "^4.5.0",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.4.0",
+    "webpack-cli": "^4.1.0",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.2.0"
+  }
+}
+```
