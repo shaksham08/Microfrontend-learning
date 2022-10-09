@@ -688,3 +688,26 @@ module.exports = merge(commonConfig, devConfig);
 ```
 
 - Note : In the previous commit(""Added marketing page"") we added all the code for marketing
+
+## Container Application
+
+- Now we would start to make the container application and also start to implement the module federation for both marketing and container application similar to last application
+
+- Note we can directly export a component and not use mount , but here we are using a mount fn because we do not want to couple any framework with this .... as in future we may not use react for one app and use any other framework or library.
+
+- Code used to call mount in react container application
+
+```js
+import { mount } from "marketing/MarketingApp";
+import React, { useRef, useEffect } from "react";
+
+export default () => {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    mount(ref.current);
+  });
+
+  return <div ref={ref} />;
+};
+```
