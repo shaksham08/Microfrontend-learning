@@ -686,3 +686,5 @@ module.exports = merge(commonConfig, devConfig);
   }
 }
 ```
+
+- Note : In the previous commit(""Added marketing page"") we added all the code for marketing
