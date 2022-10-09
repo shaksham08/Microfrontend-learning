@@ -711,3 +711,9 @@ export default () => {
   return <div ref={ref} />;
 };
 ```
+
+Note : find the commit state with commit message "🔥Added container app and lined marketing to it"
+
+- Now if we see then there is something wrong going with network tab , we are loading two copied or react library and also other libraries
+
+- Lets add shared modules to webpack
