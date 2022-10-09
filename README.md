@@ -717,3 +717,78 @@ Note : find the commit state with commit message "🔥Added container app and li
 - Now if we see then there is something wrong going with network tab , we are loading two copied or react library and also other libraries
 
 - Lets add shared modules to webpack
+
+Note : git commit message :"Added shared modules to webpack":
+
+- Now sometimes there may be a lot of modules being shared and we need to add it manually
+
+- so me may want sometimes to let webpack handle this(until we are not specific to some version/ specific to modules)
+
+- Webpack dev config for container
+
+```js
+const { merge } = require("webpack-merge");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const commonConfig = require("./webpack.common");
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const packageJson = require("../package.json");
+
+const devConfig = {
+  mode: "development",
+  devServer: {
+    port: 8080,
+    historyApiFallback: {
+      index: "index.html",
+    },
+  },
+  plugins: [
+    new ModuleFederationPlugin({
+      name: "container",
+      remotes: {
+        marketing: "marketing@http://localhost:8081/remoteEntry.js",
+      },
+      shared: packageJson.dependencies,
+    }),
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+  ],
+};
+
+module.exports = merge(commonConfig, devConfig);
+```
+
+- Webpack dev for marketing
+
+```js
+const { merge } = require("webpack-merge");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const commonConfig = require("./webpack.common");
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const packageJson = require("../package.json");
+
+const devConfig = {
+  mode: "development",
+  devServer: {
+    port: 8081,
+    historyApiFallback: {
+      index: "index.html",
+    },
+  },
+  plugins: [
+    new ModuleFederationPlugin({
+      name: "marketing",
+      filename: "remoteEntry.js",
+      exposes: {
+        "./MarketingApp": "./src/bootstrap",
+      },
+      shared: packageJson.dependencies,
+    }),
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+  ],
+};
+
+module.exports = merge(commonConfig, devConfig);
+```
