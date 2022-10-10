@@ -837,4 +837,66 @@ module.exports = merge(commonConfig, devConfig);
 
 - ## Setup Github repo
 
-  - Create a github Repo
+  - we would be using this repo only
+  - just update the git ignore file as we don't want to push dist and node modules folder there
+
+- ## Setting up production configuration for webpack
+
+  - container webpack.prod.js
+
+```js
+const { merge } = require("webpack-merge");
+
+const commonConfig = require("./webpack.common");
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const packageJson = require("../package.json");
+
+const domain = process.env.PRODUCTION_DOMAIN;
+
+const prodConfig = {
+  mode: "production",
+  output: {
+    filename: "[name].[contenthash].js",
+  },
+  plugins: [
+    new ModuleFederationPlugin({
+      name: "container",
+      remotes: {
+        marketing: `marketing@${domain}/marketing/remoteEntry.js`,
+      },
+      shared: packageJson.dependencies,
+    }),
+  ],
+};
+
+module.exports = merge(commonConfig, prodConfig);
+```
+
+- container webpack.common.js
+
+```js
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/, // .js and .jsx files
+        exclude: /node_modules/, // excluding the node_modules folder
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-react", "@babel/preset-env"],
+            plugins: ["@babel/plugin-transform-runtime"],
+          },
+        },
+      },
+    ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+  ],
+};
+```
