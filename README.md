@@ -831,8 +831,8 @@ module.exports = merge(commonConfig, devConfig);
 
 ```mermaid
  graph TD;
-     A[Webpage]-->B[Amazon cloudfront(CDN)];
-     B[]-->C[Amazon S3];
+     A[Webpage]-->B[Amazon cloudfront_CDN];
+     B-->C[Amazon S3];
 ```
 
 - ## Setup Github repo
