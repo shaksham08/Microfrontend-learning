@@ -900,3 +900,60 @@ module.exports = {
   ],
 };
 ```
+
+- Now we would move marketing app
+  - marketing prod js
+
+```js
+const { merge } = require("webpack-merge");
+const commonConfig = require("./webpack.common");
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const packageJson = require("../package.json");
+
+const prodConfig = {
+  mode: "production",
+  output: {
+    filename: "[name].[contenthash].js",
+  },
+  plugins: [
+    new ModuleFederationPlugin({
+      name: "marketing",
+      filename: "remoteEntry.js",
+      exposes: {
+        "./MarketingApp": "./src/bootstrap",
+      },
+      shared: packageJson.dependencies,
+    }),
+  ],
+};
+
+module.exports = merge(commonConfig, prodConfig);
+```
+
+- Webpack common js
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/, // .js and .jsx files
+        exclude: /node_modules/, // excluding the node_modules folder
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-react", "@babel/preset-env"],
+            plugins: ["@babel/plugin-transform-runtime"],
+          },
+        },
+      },
+    ],
+  },
+};
+```
+
+## Setting Up CI/CD pipeline
+
+- We would make use of github actions
+
+![CICD](./images/CICDbasics.png)
