@@ -792,3 +792,21 @@ const devConfig = {
 
 module.exports = merge(commonConfig, devConfig);
 ```
+
+## Implementing CI/CD pipeline
+
+- ### Deployment
+
+  - want to deploy each microfrontend independently(including the container)
+  - Location of child app remoteEntry.js file must be known at build time!
+    - this is because everything on how to load child logic lies in the remoteEntry file.
+    - There is no magic it would know , so we need to set it before (we need to add to webpack config file)
+  - Many frontend deployment solutions assume you are deploying a single project - we need something that can handle multiple different ones
+
+    - vercel(one single project)
+    - now.sh(one single project)
+    - heroku(one single project)
+    - we need to find some solution to it
+
+  - Probably need a CI/CD pipeline of some sort
+  - At present , the remoteEntry.js file name is fixed! Need to think about caching issue
