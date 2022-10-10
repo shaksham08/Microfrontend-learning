@@ -810,3 +810,31 @@ module.exports = merge(commonConfig, devConfig);
 
   - Probably need a CI/CD pipeline of some sort
   - At present , the remoteEntry.js file name is fixed! Need to think about caching issue
+
+- For this project we would use monorepo
+
+- **Note:THis will work identically if you decide to create a separate repo for each sub project**
+
+- Git monorepo
+
+  - Container
+  - marketing
+  - dashboard
+  - auth
+
+- Github
+
+  - did container change? -> build production version of container with webpack -> upload the file to amazon s3
+  - did marketing change? -> build production version of marketing with webpack -> upload the file to amazon s3
+  - did dashboard change? -> build production version of dashboard with webpack -> upload the file to amazon s3
+  - did auth change? -> build production version of auth with webpack -> upload the file to amazon s3
+
+```mermaid
+ graph TD;
+     A[Webpage]-->B[Amazon cloudfront(CDN)];
+     B[]-->C[Amazon S3];
+```
+
+- ## Setup Github repo
+
+  - Create a github Repo
