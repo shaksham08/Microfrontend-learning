@@ -957,3 +957,15 @@ module.exports = {
 - We would make use of github actions
 
 ![CICD](./images/CICDbasics.png)
+
+## Workflow for deploying container
+
+```mermaid
+ graph TD;
+     A[Whenever code is pushed to the main/master branch and this commit contains change to the container folder]-->B[Change into the container folder];
+     B-->C[install dependencies];
+     C-->D[create a production build using webpack]
+     D-->E[Upload result to aws s3]
+```
+
+- Note : all these commands is executed in virtual machine hosted by github
