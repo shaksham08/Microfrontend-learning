@@ -1066,3 +1066,24 @@ jobs:
   - Click Next: Tags
   - Click Next: Review
   - Click Create user
+
+- We also need to update the container yml file with AWS default region
+
+example is below
+
+```yml
+- uses: shinyinc/action-aws-cli@v1.2
+- run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest
+  env:
+    AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    AWS_DEFAULT_REGION: ap-south-1
+```
+
+- Now add these secret keys in github secrets
+
+  - AWS_ACCESS_KEY_ID
+  - AWS_SECRET_ACCESS_KEY
+  - AWS_S3_BUCKET_NAME
+
+- Now we are good to do and test the build
