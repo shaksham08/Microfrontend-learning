@@ -1089,4 +1089,9 @@ example is below
 - Now we are good to do and test the build
 
 - Meanwhile we also setup the marketing app
+
   - check webpack config and also marketing workflow for reference
+
+- Now if we open the url for cloudfront we could see our app working perfectly fine
+
+![cloudfrontdemo1](./images/cloudfrontdemo1.png)
