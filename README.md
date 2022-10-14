@@ -1226,3 +1226,5 @@ export default () => {
   );
 };
 ```
+
+- things can be different for other css based libraries (make sure to handle this)
