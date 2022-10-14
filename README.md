@@ -1095,3 +1095,29 @@ example is below
 - Now if we open the url for cloudfront we could see our app working perfectly fine
 
 ![cloudfrontdemo1](./images/cloudfrontdemo1.png)
+
+## Handling CSS in microfrontend
+
+- have added an Header component in container application
+
+```js
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import Header from "./components/Header";
+import MarketingApp from "./components/MarketingApp";
+
+export default () => {
+  return (
+    <BrowserRouter>
+      <div>
+        <Header />
+        <MarketingApp />
+      </div>
+    </BrowserRouter>
+  );
+};
+```
+
+- Below is the local screenshot of the container app with header
+
+![containerdemo1](./images/demolocal1.png)
