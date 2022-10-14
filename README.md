@@ -1228,3 +1228,40 @@ export default () => {
 ```
 
 - things can be different for other css based libraries (make sure to handle this)
+
+## Small Required Change to historyApiFallback
+
+- Before starting on the next section, we will need to fix up a bug related to the historyApiFallback settings. Otherwise, you will be met with 404 errors in certain situations such as directly accessing http://localhost:8081/pricing.
+
+- Find this code in the webpack/dev.js file in both marketing and the container:
+
+```js
+  devServer: {
+    port: 8082,
+    historyApiFallback: {
+      index: "index.html",
+    },
+  },
+```
+
+- You may resolve the issue by adding a / to the front of index.html:
+
+```js
+devServer: {
+    port: 8082,
+    historyApiFallback: {
+      index: "/index.html",
+    },
+  },
+```
+
+- Or, by setting to true:
+
+```js
+devServer: {
+    port: 8082,
+    historyApiFallback: true,
+  },
+```
+
+- After making this change, remember to restart both of your servers.
