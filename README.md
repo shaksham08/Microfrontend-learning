@@ -1129,3 +1129,100 @@ export default () => {
 - Here we can see somehow the styling of the header and images are broken completely
 
 - There is much deeper issue going on here
+
+- Below diagram helps us understand the CSS issue better
+
+![cssissue1](./images/cssissue1.png)
+
+## CSS scoping solutions
+
+- Custom CSS you are writing for your project
+
+  - USe a CSS in JS library
+    - adds class with specific ids
+  - Use Vue's built in component style scoping
+  - use angular's built in component style scoping
+  - Namespace all your CSS
+
+- CSS coming from a component library or css library(bootstrap)
+  - Use a component library that does css in js
+  - Manually bind the css library and apply framespacing techniques to it
+
+## Understanding css in js libraries (we are using material ui which uses this )
+
+- ![css issue two](./images/cssissue2.png)
+
+- ![css issue three](./images/cssissue3.png)
+
+- Now in production what happens is
+
+- ![css issue three](./images/cssissue4.png)
+
+- ![css issue three](./images/cssissue5.png)
+
+- Now we need to make sure generated class name for different project is very different
+
+- marketing app js
+
+- we would use generate class name and add different prefix
+
+```js
+import React from "react";
+import { Switch, Route, BrowserRouter } from "react-router-dom";
+import {
+  StylesProvider,
+  createGenerateClassName,
+} from "@material-ui/core/styles";
+
+import Landing from "./components/Landing";
+import Pricing from "./components/Pricing";
+
+const generateClassName = createGenerateClassName({
+  productionPrefix: "ma",
+});
+
+export default () => {
+  return (
+    <div>
+      <StylesProvider generateClassName={generateClassName}>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/pricing" component={Pricing} />
+            <Route path="/" component={Landing} />
+          </Switch>
+        </BrowserRouter>
+      </StylesProvider>
+    </div>
+  );
+};
+```
+
+- similarly we would do for container app
+
+```js
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import Header from "./components/Header";
+import MarketingApp from "./components/MarketingApp";
+import {
+  StylesProvider,
+  createGenerateClassName,
+} from "@material-ui/core/styles";
+
+const generateClassName = createGenerateClassName({
+  productionPrefix: "co",
+});
+
+export default () => {
+  return (
+    <BrowserRouter>
+      <StylesProvider generateClassName={generateClassName}>
+        <div>
+          <Header />
+          <MarketingApp />
+        </div>
+      </StylesProvider>
+    </BrowserRouter>
+  );
+};
+```
