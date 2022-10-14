@@ -1087,3 +1087,6 @@ example is below
   - AWS_S3_BUCKET_NAME
 
 - Now we are good to do and test the build
+
+- Meanwhile we also setup the marketing app
+  - check webpack config and also marketing workflow for reference
