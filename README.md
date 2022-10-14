@@ -1265,3 +1265,68 @@ devServer: {
 ```
 
 - After making this change, remember to restart both of your servers.
+
+## Inflexible requirements of navigation
+
+- Right now in production the navigation is broken , if we go to pricing page and again try to go back to homepage then the url updates but we dont see the content properly
+
+- Inflexible Requirements #1
+
+  - Both the container + individual sub apps need routing features
+    - users can navigate around to different sub apps using routing logic built into the container
+    - users can navigate around in a subapp using routing logic built into the subapp itself
+    - not all subapps will require routing
+
+- Inflexible Requirements #2
+
+  - Sub apps might need to add in new pages / routes all the time
+    - new routes added to a subapp shouldnt require a redeploy of the container!
+
+- Inflexible Requirements #3
+
+  - We might need to show two or more microfrontend at the same time
+    - this will occur all the time if we have some kind of sidebar nav that is built as a separate microfrontend
+
+- Inflexible Requirements #4
+
+  - We want to use off the shelf routing solutions
+    - Building a routing library can be hard - we dont want to author a new one!
+    - Some amount of custom coding is ok
+
+- Inflexible Requirements #5
+
+  - We need navigation features for sub apps in both hosted mode and in isolation
+    - developing for each environment should be easy - a developer should immediately be able to see what path they are viewing
+
+- Inflexible Requirements #6
+  - If different apps need to communicate information about routing , it should be done in as generic a fashion as possible
+    - each app might be using a completely different navigation framework
+    - we might swap out or upgrade navigation libraries all the time - shouldn't require a rewrite of the rest of the app
+
+## A few solution for above 6 requirements
+
+1. both the container + individual sub apps needs routing feature
+
+- ![routing1](./images/routing1.png)
+
+- this both app can have its own copy of react router
+
+2. sub apps might need to add in new pages/routes all the time
+
+- ![routing2](./images/routing2.png)
+
+3. we might need to show two or more microfrontends at the same time
+
+- ![routing3](./images/routing3.png)
+
+4. we want to use off the shelf routing solutions
+
+5. we need navigation features for sub-apps in both hosted mode and in isolation
+
+6. in different apps need to communicate information about routing , it should be done in as generic as fashion as possible
+
+- **FIrst three was easy but for last three we need to have more information before we can find the solution**
+
+- Routing libraries decide what content to show on the screen
+
+- ![routingdetail1](./images/routingdetail1.png)
