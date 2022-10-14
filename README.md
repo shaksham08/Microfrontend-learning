@@ -1121,3 +1121,11 @@ export default () => {
 - Below is the local screenshot of the container app with header
 
 ![containerdemo1](./images/demolocal1.png)
+
+- Below we can find the production application screenshot
+
+![proddemo1](./images/proddemo1.png)
+
+- Here we can see somehow the styling of the header and images are broken completely
+
+- There is much deeper issue going on here
