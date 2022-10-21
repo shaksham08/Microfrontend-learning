@@ -1325,8 +1325,26 @@ devServer: {
 
 6. in different apps need to communicate information about routing , it should be done in as generic as fashion as possible
 
-- **FIrst three was easy but for last three we need to have more information before we can find the solution**
+**FIrst three was easy but for last three we need to have more information before we can find the solution**
 
 - Routing libraries decide what content to show on the screen
 
 - ![routingdetail1](./images/routingdetail1.png)
+
+- All there routing libraries generally maintain 3 different kinds of history objects
+
+  - Here different kinds means what route a user is currently visiting.
+  - this first one is **Browser History** -> look at the path portion of the URL (everything after the domain) to figure out what the current path is.
+  - eg http://app.com/marketing/pricing -> everything after domain is _marketing/pricing_
+  - Another type of history is called **hash history** -> look at everything after the '#' in the URL to figure out the current path
+  - Another kind of history object **Memory/Abstract history** -> keep track of current path in the memory
+    - this does not uses url/address in any way to figure out where the user is.
+
+- So what this all have to do with our app
+- Remember we have set that our app will have multi tier navigation support
+
+```mermaid
+ graph TD;
+     A[container  ( react router )]-->B[Marketing(react router)];
+    A[]-->C[Auth(react router)];
+```
