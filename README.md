@@ -1345,8 +1345,8 @@ devServer: {
 
 ```mermaid
  graph TD;
-     A[container  ( react router )]-->B[Marketing(react router)];
-    A[]-->C[Auth(react router)];
+    A[container :react router:]-->B[Marketing :react router:];
+    A[]-->C[Auth:react router:];
 ```
 
 - Here the each copy of react router is completely 100% separate(different routing library or even version)
@@ -1354,6 +1354,6 @@ devServer: {
 
 ```mermaid
  graph TD;
-    A[container  ( react router using Browser router )]-->B[Marketing(react router using memory history)];
-    A[]-->C[Auth(react router using memory history)];
+    A[container :react router using Browser router :]-->B[Marketing:react router using memory history:];
+    A[]-->C[Auth:react router using memory history:];
 ```
