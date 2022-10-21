@@ -1358,6 +1358,47 @@ devServer: {
     A-->C[Auth uses react router using memory history];
 ```
 
-graph TD;
-A[container]-->B[MF1 -> productList];
-A-->C[MF2 -> cartPage];
+- Here all the browser router are created custom using react router or angular router ... so each uses its own implementation.
+- So we can get to some point of race condition as at the same time both container and auth or marketing wanted to change url at same time.
+- so to avoid this we will use memory history in sub apps
+
+- currently we are using browser router in sub apps as well so we need to move it to the memory history
+
+## Using memory History
+
+- now in marketing we want to use memory history
+
+```js
+import React from "react";
+import { Switch, Route, Router } from "react-router-dom";
+import {
+  StylesProvider,
+  createGenerateClassName,
+} from "@material-ui/core/styles";
+
+import Landing from "./components/Landing";
+import Pricing from "./components/Pricing";
+
+const generateClassName = createGenerateClassName({
+  productionPrefix: "ma",
+});
+
+export default () => {
+  return (
+    <div>
+      <StylesProvider generateClassName={generateClassName}>
+        <Router>
+          <Switch>
+            <Route exact path="/pricing" component={Pricing} />
+            <Route path="/" component={Landing} />
+          </Switch>
+        </Router>
+      </StylesProvider>
+    </div>
+  );
+};
+```
+
+- Here we need to now provide this router some history to use
+- Obivous thing would be to create an history file object and pass it to the Router, but we would take different approach
+- We would create this memory history object in bootstrap so that we can customize it at later point
