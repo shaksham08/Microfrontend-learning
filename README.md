@@ -1402,3 +1402,52 @@ export default () => {
 - Here we need to now provide this router some history to use
 - Obivous thing would be to create an history file object and pass it to the Router, but we would take different approach
 - We would create this memory history object in bootstrap so that we can customize it at later point
+
+```js
+// Here we would write our main project
+import React from "react";
+import ReactDom from "react-dom";
+import App from "./App";
+import { createMemoryHistory } from "history";
+// Mount fn to start the app
+const mount = (el) => {
+  const history = createMemoryHistory();
+  ReactDom.render(<App history={history} />, el);
+};
+
+// if we are in dev and isolation
+// call mount immediately
+if (process.env.NODE_ENV === "development") {
+  const devRoot = document.querySelector("#_marketing-dev-root");
+
+  if (devRoot) {
+    mount(devRoot);
+  }
+}
+
+// if we are running through  container
+// we should export the mount function
+export { mount };
+```
+
+- Here now things start to work , but there is some issue that whenever we go to pricing page then the URL is not changing and also we cannot go back to homepage
+
+- ![routingdetail1](./images/routing4.png)
+
+- Why strange results ? : why our routing is not working
+
+![routingdetail1](./images/routing5.png)
+
+- here we updated the marketing history but this does not update anything to the browser history , so address bar stays at localhost:8080
+
+- Here is the another scenario
+
+![routingdetail1](./images/routing6.png)
+
+- so how is this navigation stuff scoped
+
+![routingdetail1](./images/routing7.png)
+
+## Communication between the apps
+
+-
