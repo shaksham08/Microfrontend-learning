@@ -1570,3 +1570,11 @@ export default () => {
   return <div ref={ref} />;
 };
 ```
+
+## Notes around authentication
+
+- auth app is for signin/up for users
+- auth app is not enforcing permissions , allowing access to certain routes , or figuring out if user is signed in
+- Two approach for handling auth
+- (1) each app is aware of auth
+- (2) centralized auth in container
