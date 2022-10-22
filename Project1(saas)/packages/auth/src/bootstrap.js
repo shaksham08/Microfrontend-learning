@@ -4,7 +4,7 @@ import ReactDom from "react-dom";
 import App from "./App";
 import { createMemoryHistory, createBrowserHistory } from "history";
 // Mount fn to start the app
-const mount = (el, { onNavigate, defaultHistory }) => {
+const mount = (el, { onNavigate, defaultHistory, initialPath }) => {
   const history =
     defaultHistory ||
     createMemoryHistory({
@@ -24,10 +24,10 @@ const mount = (el, { onNavigate, defaultHistory }) => {
 // if we are in dev and isolation
 // call mount immediately
 if (process.env.NODE_ENV === "development") {
-  const devRoot = document.querySelector("#_marketing-dev-root");
+  const devRoot = document.querySelector("#_auth-dev-root");
 
   if (devRoot) {
-    mount(devRoot, { defaultHistory: createBrowserHistory });
+    mount(devRoot, { defaultHistory: createBrowserHistory() });
   }
 }
 
