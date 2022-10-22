@@ -1450,4 +1450,123 @@ export { mount };
 
 ## Communication between the apps
 
--
+![routingdetail1](./images/routing8.png)
+
+- Here the communication about routing between container and a subapp!! it should be done as generic as possible
+
+![routingdetail1](./images/routing9.png)
+
+- Container app
+
+```js
+import { mount } from "marketing/MarketingApp";
+import React, { useRef, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+
+export default () => {
+  const ref = useRef(null);
+  const history = useHistory();
+
+  useEffect(() => {
+    mount(ref.current, {
+      onNavigate: ({ pathname: nextPathName }) => {
+        const { pathname } = history.location;
+        if (pathname !== nextPathName) history.push(nextPathName);
+      },
+    });
+  });
+
+  return <div ref={ref} />;
+};
+```
+
+- Marketing app
+
+```js
+// Here we would write our main project
+import React from "react";
+import ReactDom from "react-dom";
+import App from "./App";
+import { createMemoryHistory } from "history";
+// Mount fn to start the app
+const mount = (el, { onNavigate }) => {
+  const history = createMemoryHistory();
+  if (onNavigate) history.listen(onNavigate);
+  ReactDom.render(<App history={history} />, el);
+};
+
+// if we are in dev and isolation
+// call mount immediately
+if (process.env.NODE_ENV === "development") {
+  const devRoot = document.querySelector("#_marketing-dev-root");
+
+  if (devRoot) {
+    mount(devRoot, {});
+  }
+}
+
+// if we are running through  container
+// we should export the mount function
+export { mount };
+```
+
+- Now we need to also address the reverse process
+
+```js
+// Here we would write our main project
+import React from "react";
+import ReactDom from "react-dom";
+import App from "./App";
+import { createMemoryHistory, createBrowserHistory } from "history";
+// Mount fn to start the app
+const mount = (el, { onNavigate, defaultHistory }) => {
+  const history = defaultHistory || createMemoryHistory();
+  if (onNavigate) history.listen(onNavigate);
+  ReactDom.render(<App history={history} />, el);
+
+  return {
+    onParentNavigate({ pathname: nextPathName }) {
+      const { pathname } = history.location;
+      if (pathname !== nextPathName) history.push(nextPathName);
+    },
+  };
+};
+
+// if we are in dev and isolation
+// call mount immediately
+if (process.env.NODE_ENV === "development") {
+  const devRoot = document.querySelector("#_marketing-dev-root");
+
+  if (devRoot) {
+    mount(devRoot, { defaultHistory: createBrowserHistory });
+  }
+}
+
+// if we are running through  container
+// we should export the mount function
+export { mount };
+```
+
+```js
+import { mount } from "marketing/MarketingApp";
+import React, { useRef, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+
+export default () => {
+  const ref = useRef(null);
+  const history = useHistory();
+
+  useEffect(() => {
+    const { onParentNavigate } = mount(ref.current, {
+      onNavigate: ({ pathname: nextPathName }) => {
+        const { pathname } = history.location;
+        if (pathname !== nextPathName) history.push(nextPathName);
+      },
+    });
+
+    history.listen(onParentNavigate);
+  }, []);
+
+  return <div ref={ref} />;
+};
+```

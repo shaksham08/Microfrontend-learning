@@ -2,11 +2,19 @@
 import React from "react";
 import ReactDom from "react-dom";
 import App from "./App";
-import { createMemoryHistory } from "history";
+import { createMemoryHistory, createBrowserHistory } from "history";
 // Mount fn to start the app
-const mount = (el) => {
-  const history = createMemoryHistory();
+const mount = (el, { onNavigate, defaultHistory }) => {
+  const history = defaultHistory || createMemoryHistory();
+  if (onNavigate) history.listen(onNavigate);
   ReactDom.render(<App history={history} />, el);
+
+  return {
+    onParentNavigate({ pathname: nextPathName }) {
+      const { pathname } = history.location;
+      if (pathname !== nextPathName) history.push(nextPathName);
+    },
+  };
 };
 
 // if we are in dev and isolation
@@ -15,7 +23,7 @@ if (process.env.NODE_ENV === "development") {
   const devRoot = document.querySelector("#_marketing-dev-root");
 
   if (devRoot) {
-    mount(devRoot);
+    mount(devRoot, { defaultHistory: createBrowserHistory });
   }
 }
 
