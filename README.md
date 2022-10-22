@@ -1578,3 +1578,5 @@ export default () => {
 - Two approach for handling auth
 - (1) each app is aware of auth
 - (2) centralized auth in container
+
+![routingdetail1](./images/routing10.png)
