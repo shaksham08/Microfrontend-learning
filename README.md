@@ -1580,3 +1580,5 @@ export default () => {
 - (2) centralized auth in container
 
 ![routingdetail1](./images/routing10.png)
+
+## Dashboard Page
